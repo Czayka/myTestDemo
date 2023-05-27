@@ -9,6 +9,7 @@
         <module name="es-demo" />
         <module name="order-service" />
         <module name="storage-service" />
+        <module name="redis-demo" />
         <module name="account-service" />
         <module name="mq-demo" />
       </profile>
@@ -20,6 +21,7 @@
       <module name="es-demo" options="-parameters" />
       <module name="mq-demo" options="-parameters" />
       <module name="order-service" options="-parameters" />
+      <module name="redis-demo" options="-parameters" />
       <module name="storage-service" options="-parameters" />
     </option>
   </component>

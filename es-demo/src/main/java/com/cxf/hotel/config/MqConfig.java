@@ -1,10 +1,7 @@
 package com.cxf.hotel.config;
 
 import com.cxf.hotel.constants.MqConstans;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.core.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -32,4 +29,6 @@ public class MqConfig {
     public Binding deleteQueueBinding(){
         return BindingBuilder.bind(deleteQueue()).to(topicExchange()).with(MqConstans.HOTEL_DELETE_KEY);
     }
+
+
 }

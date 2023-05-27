@@ -21,4 +21,6 @@ public class MqConstans {
      * 删除的RoutingKey
      */
     public final static String HOTEL_DELETE_KEY="hotel.delete";
+
+    public final static String TTL_KEY="ttl.key";
 }

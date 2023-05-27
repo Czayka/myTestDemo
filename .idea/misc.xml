@@ -7,6 +7,7 @@
         <option value="$PROJECT_DIR$/es-demo/pom.xml" />
         <option value="$PROJECT_DIR$/mq-demo/pom.xml" />
         <option value="$PROJECT_DIR$/seata-demo/pom.xml" />
+        <option value="$PROJECT_DIR$/redis-demo/pom.xml" />
       </list>
     </option>
   </component>

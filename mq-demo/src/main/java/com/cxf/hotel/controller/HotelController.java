@@ -6,6 +6,7 @@ import com.cxf.hotel.pojo.Hotel;
 import com.cxf.hotel.pojo.PageResult;
 import com.cxf.hotel.service.IHotelService;
 import com.cxf.hotel.service.impl.HotelService;
+import org.springframework.amqp.core.MessageBuilder;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
