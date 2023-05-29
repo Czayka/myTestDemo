@@ -14,6 +14,15 @@ spring:
     virtual-host: /
     publisher-confirm-type: correlated
     publisher-returns: true
+    listener:
+      simple:
+        # acknowledge-mode: auto # 可以省略
+        # 重试机制
+        retry:
+          enabled: true #是否开启消费者重试
+          max-attempts: 3 #最大重试次数
+          initial-interval: 5000ms #重试间隔时间（单位毫秒）
+          multiplier: 2
 logging:
   level:
     com.cxf: debug

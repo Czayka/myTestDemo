@@ -1,10 +1,14 @@
 package com.cxf.hotel.config;
 
+import com.cxf.hotel.constants.MqConstans;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.rabbit.retry.MessageRecoverer;
+import org.springframework.amqp.rabbit.retry.RepublishMessageRecoverer;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +17,8 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 @Configuration
 public class RabbitMQConfig implements ApplicationContextAware {
+
+    RabbitTemplate rabbitTemplate = null;
 
     public static final String CONFIRM_EXCHANGE_NAME = "confirm_exchange";
     public static final String CONFIRM_QUEUE_NAME = "confirm_queue";
@@ -26,6 +32,25 @@ public class RabbitMQConfig implements ApplicationContextAware {
     public static final String BACKUP_QUEUE_NAME = "backup_queue";
     //报警队列
     public static final String WARNING_QUEUE_NAME = "warning_queue";
+
+    @Bean
+    public TopicExchange errorExchange(){
+        return new TopicExchange(MqConstans.ERROR_EXCHANGE,true,false);
+    }
+    @Bean
+    public Queue errorQueue(){
+        return new Queue(MqConstans.ERROR_QUEUE,true);
+    }
+    @Bean
+    public Binding errorQueueBindingErrorExchange(){
+        return BindingBuilder.bind(errorQueue()).to(errorExchange()).with(MqConstans.ERROR_ROUTING_KEY);
+    }
+    @Bean
+    public MessageRecoverer messageRecoverer(){
+        //AmqpTemplate和RabbitTemplate都可以
+        return new RepublishMessageRecoverer(rabbitTemplate, MqConstans.ERROR_EXCHANGE, MqConstans.ERROR_ROUTING_KEY);
+    }
+
 
     @Bean
     public DirectExchange confirmExchange(){
@@ -70,7 +95,7 @@ public class RabbitMQConfig implements ApplicationContextAware {
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         // 获取RabbitTemplate
-        RabbitTemplate rabbitTemplate = applicationContext.getBean(RabbitTemplate.class);
+        rabbitTemplate = applicationContext.getBean(RabbitTemplate.class);
         //设置ConfirmCallback
         rabbitTemplate.setConfirmCallback((correlationData, b, s)->{
             String id = correlationData != null ? correlationData.getId() : "";

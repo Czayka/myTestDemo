@@ -5,6 +5,10 @@ public class MqConstans {
     public static final String DELAYED_QUEUE="delayed.queue";
     public static final String DELAYED_ROUTING_KEY="delayed.routingkey";
 
+    public static final String ERROR_EXCHANGE = "error.exchange";
+    public static final String ERROR_QUEUE = "error.queue";
+    public static final String ERROR_ROUTING_KEY = "error.routing-key";
+
 
     /**
      * 交换机

@@ -24,6 +24,17 @@ public class SendMsgController {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+    @GetMapping("/errorMessage/{message}")
+    public void senErrorMessage(@PathVariable String message){
+        log.info("当前时间{}，发送一条错误信息给队列：{}",new Date().toString(),message);
+        CorrelationData correlationData1 = new CorrelationData();
+        correlationData1.setId("1");
+
+        rabbitTemplate.convertAndSend(RabbitMQConfig.CONFIRM_EXCHANGE_NAME,
+                RabbitMQConfig.CONFIRM_EXCHANGE_ROUTING_KEY,message,correlationData1);
+        log.info("发送消息内容为：{}",message);
+    }
+
     @GetMapping("/message/{message}")
     public void senMessage(@PathVariable String message){
         log.info("当前时间{}，发送一条信息给两个TTL队列：{}",new Date().toString(),message);
