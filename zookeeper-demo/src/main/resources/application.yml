@@ -1,0 +1,15 @@
+curator:
+  #重试retryCount次，当会话超时出现后，curator会每间隔elapsedTimeMs毫秒时间重试一次，共重试retryCount次。
+  retryCount: 5
+  elapsedTimeMs: 5000
+  #服务器信息
+  connectString: 159.75.56.189:2181
+  #会话超时时间设置
+  sessionTimeoutMs: 60000
+  #连接超时时间
+  connectionTimeoutMs: 5000
+
+
+logging:
+  level:
+    root: warn
